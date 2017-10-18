@@ -20,7 +20,7 @@ type SubSSet struct {
 }
 
 //New Sorted Set
-func NewSubSet(cmp func(a, b interface{}) int, initSize ...int) *SubSSet {
+func NewSubSSet(cmp func(a, b interface{}) int, initSize ...int) *SubSSet {
 	var iSize int = N
 	if len(initSize) > 0 {
 		iSize = math.MaxInt(1, initSize[0])

@@ -11,7 +11,7 @@ func (s *SubSSet) Union(other *SubSSet) *SubSSet {
 
 //Intersection - s intersection
 func (s *SubSSet) Intersection(other *SubSSet) *SubSSet {
-	inter := NewSubSet(s.cmp)
+	inter := NewSubSSet(s.cmp)
 	for _, v := range other.view {
 		if s.Contains(v) {
 			inter.Add(v)
@@ -23,7 +23,7 @@ func (s *SubSSet) Intersection(other *SubSSet) *SubSSet {
 //Difference- s difference
 //items in s not contained in other
 func (s *SubSSet) Difference(other *SubSSet) *SubSSet {
-	diff := NewSubSet(s.cmp)
+	diff := NewSubSSet(s.cmp)
 	for _, v := range s.view {
 		if !other.Contains(v) {
 			diff.Add(v)

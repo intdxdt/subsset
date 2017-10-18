@@ -37,13 +37,13 @@ func TestSSet(t *testing.T) {
 		var array = []interface{}{9, 5, 3, 2, 8, 6, 4, 6, 1, 2, 3}
 		var arrayF = []interface{}{9.0, 5.0, 3.0, 2.0, 8.0, 6.0, 4.0, 6.0, 1.0, 2.0, 3.0}
 		var arrayS = []interface{}{"foo", "bar", "baz", "tar", "fiz", "tau", "aww"}
-		var obj_flt = NewSubSet(FloatCompare)
+		var obj_flt = NewSubSSet(FloatCompare)
 		for _, v := range arrayF {
 			obj_flt.Add(v)
 		}
 
 		g.It("should test s - common-int - special case of base 1", func() {
-			sa := NewSubSet(IntCompare, 1)
+			sa := NewSubSSet(IntCompare, 1)
 			for _, v := range []int{0, 1, 2, 3, 4, 5, 6} {
 				sa.append(v)
 			}
@@ -51,7 +51,7 @@ func TestSSet(t *testing.T) {
 			sb := sa.Clone()
 			sb.Extend(7, 8, 9)
 			g.Assert(sb.view).Equal([]interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
-			sc := NewSubSet(IntCompare).Extend(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+			sc := NewSubSSet(IntCompare).Extend(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
 			g.Assert(sc.view).Equal([]interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
 			sc.Extend(7, 8, 9)
 			g.Assert(sc.view).Equal([]interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
@@ -59,7 +59,7 @@ func TestSSet(t *testing.T) {
 		})
 
 		g.It("should test s - common-int interface", func() {
-			var st = NewSubSet(IntCompare)
+			var st = NewSubSSet(IntCompare)
 			for _, v := range array {
 				st.Add(v)
 			}
@@ -134,7 +134,7 @@ func TestSSet(t *testing.T) {
 		})
 
 		g.It("should test s - common-float interface", func() {
-			var st = NewSubSet(FloatCompare)
+			var st = NewSubSSet(FloatCompare)
 			g.Assert(st.Size() == 0).IsTrue()
 			for _, v := range arrayF {
 				st.Add(v)
@@ -173,7 +173,7 @@ func TestSSet(t *testing.T) {
 		})
 
 		g.It("should test s - common-string interface", func() {
-			var st = NewSubSet(StrCompare)
+			var st = NewSubSSet(StrCompare)
 			for _, v := range arrayS {
 				st.Add(v)
 			}
@@ -236,9 +236,9 @@ func TestSSet(t *testing.T) {
 func TestSSet_Set(t *testing.T) {
 	g := goblin.Goblin(t)
 	g.Describe("SSet - Set Opt", func() {
-		var s1 = NewSubSet(IntCompare)
-		var s2 = NewSubSet(IntCompare)
-		var s3 = NewSubSet(IntCompare)
+		var s1 = NewSubSSet(IntCompare)
+		var s2 = NewSubSSet(IntCompare)
+		var s3 = NewSubSSet(IntCompare)
 
 		s1.Add(1)
 		s1.Add(0)
