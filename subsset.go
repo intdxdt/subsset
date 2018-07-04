@@ -3,36 +3,36 @@ package subsset
 import (
 	"fmt"
 	"bytes"
-	"github.com/intdxdt/algor"
 	"github.com/intdxdt/math"
+	"github.com/intdxdt/algor"
 )
 
 const N = 32
 
 //SSet type
 type SubSSet struct {
-	cmp  func(a, b interface{}) int
-	base []interface{}
-	view []interface{}
-	i    int
-	j    int
+	cmp      func(a, b interface{}) int
+	base     []interface{}
+	view     []interface{}
+	i        int
+	j        int
 	initSize int
 }
 
 //New Sorted Set
 func NewSubSSet(cmp func(a, b interface{}) int, initSize ...int) *SubSSet {
-	var iSize int = N
+	var iSize = N
 	if len(initSize) > 0 {
 		iSize = math.MaxInt(1, initSize[0])
 	}
 
-	base, view, i, j := initQue(iSize)
+	var base, view, i, j = initQue(iSize)
 	return &SubSSet{
-		cmp:  cmp,
-		base: base,
-		view: view,
-		i:    i,
-		j:    j,
+		cmp:      cmp,
+		base:     base,
+		view:     view,
+		i:        i,
+		j:        j,
 		initSize: iSize,
 	}
 }
@@ -44,9 +44,9 @@ func (s *SubSSet) DataView() []interface{} {
 
 //Clone SSet
 func (s *SubSSet) Clone() *SubSSet {
-	base := make([]interface{}, len(s.base))
+	var base = make([]interface{}, len(s.base))
 	copy(base, s.base)
-	view := base[s.i:s.j]
+	var view = base[s.i:s.j]
 	return &SubSSet{
 		cmp:  s.cmp,
 		base: base,
@@ -71,7 +71,7 @@ func (s *SubSSet) Contains(items ...interface{}) bool {
 
 //IndexOf item in the sorted s  - O(lgN)
 func (s *SubSSet) IndexOf(item interface{}) int {
-	idx := -1
+	var idx = -1
 	if s.IsEmpty() {
 		return idx
 	}
@@ -89,18 +89,20 @@ func (s *SubSSet) Size() int {
 
 //First item in s
 func (s *SubSSet) First() interface{} {
+	var r interface{}
 	if !s.IsEmpty() {
-		return s.first()
+		r = s.first()
 	}
-	return nil
+	return r
 }
 
 //Last Item in s
 func (s *SubSSet) Last() interface{} {
+	var r interface{}
 	if !s.IsEmpty() {
-		return s.last()
+		r = s.last()
 	}
-	return nil
+	return r
 }
 
 //NextItem given item in the sorted s
@@ -108,16 +110,16 @@ func (s *SubSSet) NextItem(v interface{}) interface{} {
 	if s.IsEmpty() {
 		return nil
 	}
-	array := s.base
-	n := s.j - 1
-	raw_idx := algor.BS(array[:], v, s.cmp, s.i, n)
+	var array = s.base
+	var n = s.j - 1
+	var rawIdx = algor.BS(array[:], v, s.cmp, s.i, n)
 
-	idx := raw_idx
+	var idx = rawIdx
 	if idx < 0 {
 		idx = -idx - 1
 	}
-	var next interface{} = nil
-	if raw_idx >= 0 && s.i <= idx && idx < n {
+	var next interface{}
+	if rawIdx >= 0 && s.i <= idx && idx < n {
 		next = array[idx+1]
 	}
 	return next
@@ -128,16 +130,16 @@ func (s *SubSSet) PrevItem(v interface{}) interface{} {
 	if s.IsEmpty() {
 		return nil
 	}
-	array := s.base
-	n := s.j - 1
-	raw_idx := algor.BS(array[:], v, s.cmp, s.i, n)
+	var array = s.base
+	var n = s.j - 1
+	var rawIdx = algor.BS(array[:], v, s.cmp, s.i, n)
 
-	idx := raw_idx
+	idx := rawIdx
 	if idx < 0 {
 		idx = -idx - 1
 	}
-	var prev interface{} = nil
-	if raw_idx >= 0 && s.i < idx && idx <= n {
+	var prev interface{}
+	if rawIdx >= 0 && s.i < idx && idx <= n {
 		prev = array[idx-1]
 	}
 	return prev
@@ -157,23 +159,25 @@ func (s *SubSSet) Filter(fn func(interface{}, int) bool) []interface{} {
 
 //Pop item from the end of the sorted list
 func (s *SubSSet) Pop() interface{} {
+	var r interface{}
 	if !s.IsEmpty() {
-		return s.pop()
+		r = s.pop()
 	}
-	return nil
+	return r
 }
 
 //PopLeft item from the beginning of the sorted list
 func (s *SubSSet) PopLeft() interface{} {
+	var r interface{}
 	if !s.IsEmpty() {
-		return s.popLeft()
+		r = s.popLeft()
 	}
-	return nil
+	return r
 }
 
 //Values in s
 func (s *SubSSet) Values() []interface{} {
-	values := make([]interface{}, s.len())
+	var values = make([]interface{}, s.len())
 	copy(values, s.view)
 	return values
 }
@@ -207,10 +211,11 @@ func (s *SubSSet) IsEmpty() bool {
 
 func (s *SubSSet) String() string {
 	var buffer bytes.Buffer
-	n := s.len()
+	var n = s.len()
+	var token string
 	buffer.WriteString("[")
 	for i, o := range s.view {
-		token := fmt.Sprintf("%v", o)
+		token = fmt.Sprintf("%v", o)
 		if i < n-1 {
 			token += ", "
 		}
