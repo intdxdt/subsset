@@ -2,7 +2,7 @@ package subsset
 
 import "github.com/intdxdt/algor"
 
-//Push item to s - worst case at O(N^2)
+//Add - Push item to s - worst case at O(N^2)
 //the cost here at O(n^2) is to allow dynamic indexing
 //to add an item, Push uses O(lgN) to find where to insert
 //and linear time O(1) or O(N-1) to keep s in sorted order
@@ -57,4 +57,3 @@ func (s *SubSSet) add(v interface{}) *SubSSet {
 	}
 	return s
 }
-

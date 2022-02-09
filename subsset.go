@@ -1,10 +1,10 @@
 package subsset
 
 import (
-	"fmt"
 	"bytes"
-	"github.com/intdxdt/math"
+	"fmt"
 	"github.com/intdxdt/algor"
+	"github.com/intdxdt/math"
 )
 
 const N = 32

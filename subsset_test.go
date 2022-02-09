@@ -2,8 +2,8 @@ package subsset
 
 import (
 	"fmt"
-	"testing"
 	"github.com/franela/goblin"
+	"testing"
 )
 
 func IntCompare(a, b interface{}) int {
@@ -194,10 +194,10 @@ func TestSSet(t *testing.T) {
 				return true
 			})
 
-			fmt.Println("\nRemoved tau\n")
+			fmt.Print("\nRemoved tau\n")
 			fmt.Println(st.base)
 
-			g.Assert(eachItem).Eql([]interface{}{"aww", "bar", "baz", "fiz", "foo", "tar", })
+			g.Assert(eachItem).Eql([]interface{}{"aww", "bar", "baz", "fiz", "foo", "tar"})
 
 			g.Assert(st.First()).Equal("aww")
 			g.Assert(st.PrevItem("aww") == nil).IsTrue()
