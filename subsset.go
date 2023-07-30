@@ -9,7 +9,7 @@ import (
 
 const N = 32
 
-//SSet type
+// SubSSet type
 type SubSSet struct {
 	cmp      func(a, b interface{}) int
 	base     []interface{}
@@ -19,11 +19,11 @@ type SubSSet struct {
 	initSize int
 }
 
-//New Sorted Set
+// NewSubSSet - New Sorted Set
 func NewSubSSet(cmp func(a, b interface{}) int, initSize ...int) *SubSSet {
 	var iSize = N
 	if len(initSize) > 0 {
-		iSize = math.MaxInt(1, initSize[0])
+		iSize = math.Max(1, initSize[0])
 	}
 
 	var base, view, i, j = initQue(iSize)
@@ -37,12 +37,12 @@ func NewSubSSet(cmp func(a, b interface{}) int, initSize ...int) *SubSSet {
 	}
 }
 
-//reveal underlying sorted slice of data view
+// reveal underlying sorted slice of data view
 func (s *SubSSet) DataView() []interface{} {
 	return s.view
 }
 
-//Clone SSet
+// Clone SSet
 func (s *SubSSet) Clone() *SubSSet {
 	var base = make([]interface{}, len(s.base))
 	copy(base, s.base)
@@ -56,7 +56,7 @@ func (s *SubSSet) Clone() *SubSSet {
 	}
 }
 
-//Contains item for the presence of a value in the Array - O(lgN)
+// Contains item for the presence of a value in the Array - O(lgN)
 func (s *SubSSet) Contains(items ...interface{}) bool {
 	if s.IsEmpty() {
 		return false
@@ -69,7 +69,7 @@ func (s *SubSSet) Contains(items ...interface{}) bool {
 	return bln
 }
 
-//IndexOf item in the sorted s  - O(lgN)
+// IndexOf item in the sorted s  - O(lgN)
 func (s *SubSSet) IndexOf(item interface{}) int {
 	var idx = -1
 	if s.IsEmpty() {
@@ -82,12 +82,12 @@ func (s *SubSSet) IndexOf(item interface{}) int {
 	return idx
 }
 
-//Size of list
+// Size of list
 func (s *SubSSet) Size() int {
 	return s.len()
 }
 
-//First item in s
+// First item in s
 func (s *SubSSet) First() interface{} {
 	var r interface{}
 	if !s.IsEmpty() {
@@ -96,7 +96,7 @@ func (s *SubSSet) First() interface{} {
 	return r
 }
 
-//Last Item in s
+// Last Item in s
 func (s *SubSSet) Last() interface{} {
 	var r interface{}
 	if !s.IsEmpty() {
@@ -105,7 +105,7 @@ func (s *SubSSet) Last() interface{} {
 	return r
 }
 
-//NextItem given item in the sorted s
+// NextItem given item in the sorted s
 func (s *SubSSet) NextItem(v interface{}) interface{} {
 	if s.IsEmpty() {
 		return nil
@@ -125,7 +125,7 @@ func (s *SubSSet) NextItem(v interface{}) interface{} {
 	return next
 }
 
-//PrevItem gets previous given item in the sorted s
+// PrevItem gets previous given item in the sorted s
 func (s *SubSSet) PrevItem(v interface{}) interface{} {
 	if s.IsEmpty() {
 		return nil
@@ -145,7 +145,7 @@ func (s *SubSSet) PrevItem(v interface{}) interface{} {
 	return prev
 }
 
-//Filters items based on predicate : func (item Item, i int) bool
+// Filters items based on predicate : func (item Item, i int) bool
 func (s *SubSSet) Filter(fn func(interface{}, int) bool) []interface{} {
 	var items = make([]interface{}, 0)
 	s.ForEach(func(v interface{}, i int) bool {
@@ -157,7 +157,7 @@ func (s *SubSSet) Filter(fn func(interface{}, int) bool) []interface{} {
 	return items
 }
 
-//Pop item from the end of the sorted list
+// Pop item from the end of the sorted list
 func (s *SubSSet) Pop() interface{} {
 	var r interface{}
 	if !s.IsEmpty() {
@@ -166,7 +166,7 @@ func (s *SubSSet) Pop() interface{} {
 	return r
 }
 
-//PopLeft item from the beginning of the sorted list
+// PopLeft item from the beginning of the sorted list
 func (s *SubSSet) PopLeft() interface{} {
 	var r interface{}
 	if !s.IsEmpty() {
@@ -175,20 +175,20 @@ func (s *SubSSet) PopLeft() interface{} {
 	return r
 }
 
-//Values in s
+// Values in s
 func (s *SubSSet) Values() []interface{} {
 	var values = make([]interface{}, s.len())
 	copy(values, s.view)
 	return values
 }
 
-//Empty SubSSet
+// Empty SubSSet
 func (s *SubSSet) Empty() *SubSSet {
 	s.clear()
 	return s
 }
 
-//Extend SSet given list of values as params
+// Extend SSet given list of values as params
 func (s *SubSSet) Extend(values ...interface{}) *SubSSet {
 	for _, v := range values {
 		s.Add(v)
@@ -196,7 +196,7 @@ func (s *SubSSet) Extend(values ...interface{}) *SubSSet {
 	return s
 }
 
-//First value in SSet
+// First value in SSet
 func (s *SubSSet) Get(idx int) interface{} {
 	if idx < 0 {
 		idx += len(s.view)
@@ -204,7 +204,7 @@ func (s *SubSSet) Get(idx int) interface{} {
 	return s.view[idx]
 }
 
-//Checks if SSet empty
+// Checks if SSet empty
 func (s *SubSSet) IsEmpty() bool {
 	return s.len() == 0
 }
@@ -225,7 +225,7 @@ func (s *SubSSet) String() string {
 	return buffer.String()
 }
 
-//Loop through items in the queue with a callback
+// Loop through items in the queue with a callback
 // if callback returns bool. Break looping with callback
 // return as false
 func (s *SubSSet) ForEach(fn func(interface{}, int) bool) {
